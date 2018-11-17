@@ -1,0 +1,10 @@
+version: '3'
+services:
+  api-product:
+    build: products/
+    ports:
+      - "8080:8080"
+  redis-products:
+    image: "redis:4.0-alpine"
+    ports:
+      - "6383:6379"

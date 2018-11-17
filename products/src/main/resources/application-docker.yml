@@ -1,0 +1,3 @@
+---
+redis:
+    uri: redis://redis-products:6379
