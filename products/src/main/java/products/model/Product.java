@@ -11,7 +11,7 @@ import java.io.Serializable;
 @ToString
 public class Product implements Serializable {
 
-    private Integer id;
+    private String id;
     private String name;
     private Double price;
 }

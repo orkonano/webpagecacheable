@@ -6,7 +6,7 @@ import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
-public class SerializedObjectCodec implements RedisCodec<String, Object> {
+public class SerializedObjectCodec<T> implements RedisCodec<String, T> {
     private Charset charset = Charset.forName("UTF-8");
 
     @Override
@@ -15,12 +15,12 @@ public class SerializedObjectCodec implements RedisCodec<String, Object> {
     }
 
     @Override
-    public Object decodeValue(ByteBuffer bytes) {
+    public T decodeValue(ByteBuffer bytes) {
         try {
             byte[] array = new byte[bytes.remaining()];
             bytes.get(array);
             ObjectInputStream is = new ObjectInputStream(new ByteArrayInputStream(array));
-            return is.readObject();
+            return (T)is.readObject();
         } catch (Exception e) {
             return null;
         }
@@ -32,7 +32,7 @@ public class SerializedObjectCodec implements RedisCodec<String, Object> {
     }
 
     @Override
-    public ByteBuffer encodeValue(Object value) {
+    public ByteBuffer encodeValue(T value) {
         try {
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
             ObjectOutputStream os = new ObjectOutputStream(bytes);

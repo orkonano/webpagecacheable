@@ -1,19 +1,18 @@
 package products.service;
 
-import io.reactivex.Flowable;
 import products.model.Product;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ProductService {
 
-    Product create(Product product);
+    Mono<Product> create(Product product);
 
-    Product update(Product product);
+    Mono<Product> update(Product product);
 
-    Optional<Product> getById(Integer id);
+    Mono<Product> getById(String id);
 
-    Flowable<List<Product>> list();
+    Mono<List<Product>> list();
 
 }
