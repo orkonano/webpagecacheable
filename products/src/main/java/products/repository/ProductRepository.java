@@ -3,6 +3,7 @@ package products.repository;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.api.reactive.RedisReactiveCommands;
+import io.reactivex.Flowable;
 import lombok.extern.slf4j.Slf4j;
 import products.model.Product;
 import products.redis.SerializedObjectCodec;
@@ -35,22 +36,21 @@ public class ProductRepository {
 
     public Mono<Product> save(Product product){
         RedisReactiveCommands<String, Product> commands = redisConnection.reactive();
+        Mono<String> saved = null;
         if (product.getId() != null){
-            Product productMono = commands.get(product.getId()).block();
-            if (productMono != null) {
-                return commands.set(product.getId(), product)
-                        .map(result -> product);
-            }else {
-                return Mono.empty();
-            }
+            log.info("Updating the product with id {}", product.getId());
+            saved = commands.get(product.getId())
+                    .doOnNext(p -> log.info("Retrieved the product {}", p))
+                    .flatMap(p -> commands.set(product.getId(), product));
         }else {
             product.setId(UUID.randomUUID().toString());
             log.info("Creating the product with id {}", product.getId());
-            Mono<Product> productMono = commands.set(product.getId(), product)
-                    .map(success -> product);
-            productMono.subscribe(result -> log.info("The product {} was created {}", product.getId(), result));
-            return productMono;
+            saved = commands.set(product.getId(), product);
         }
+        return saved
+                .doOnSuccess(p -> log.info("The product {} was saved successfully", p))
+                .doOnError(t -> log.error("Error saving product {}", product, t))
+                .map(result -> product);
     }
 
     public Mono<Product> getById(String id){

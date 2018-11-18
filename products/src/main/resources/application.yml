@@ -6,3 +6,4 @@ micronaut:
 ---
 redis:
     uri: redis://0.0.0.0:6383
+    timeout: 30s
