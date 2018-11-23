@@ -20,7 +20,11 @@ import java.util.List;
 @Controller("/products")
 public class ProductController {
 
-    @Inject private ProductService productService;
+    private ProductService productService;
+
+    public ProductController(ProductService productService){
+        this.productService = productService;
+    }
 
 
     @Get()
