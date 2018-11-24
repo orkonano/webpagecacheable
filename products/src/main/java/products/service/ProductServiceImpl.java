@@ -13,8 +13,6 @@ import java.util.List;
 @Slf4j
 public class ProductServiceImpl implements ProductService {
 
-    private volatile int productIdInsert = 1;
-
     @Inject private ProductRepository productRepository;
 
     @Override
