@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: api.gateway
+---
+testFramework: spock
+sourceLanguage: java
