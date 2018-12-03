@@ -1,3 +1,14 @@
 micronaut:
     application:
         name: api-gateway
+    http:
+        services:
+            product:
+                pool:
+                    enabled: true
+                    max-connections: 20
+                    acquire-timeout: 5s
+                    read-timeout: 5s
+                urls:
+                - http://localhost:8081
+                path: /products

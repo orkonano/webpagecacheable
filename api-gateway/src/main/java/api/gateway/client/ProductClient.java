@@ -9,7 +9,7 @@ import io.reactivex.Single;
 
 import java.util.List;
 
-@Client("http://localhost:8081/products")
+@Client(id = "product")
 public interface ProductClient {
 
     @Get()
