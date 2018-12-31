@@ -9,8 +9,6 @@ import products.service.ProductService;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Slf4j
@@ -24,7 +22,6 @@ public class ProductController {
         this.productService = productService;
     }
 
-
     @Get()
     public Mono<List<Product>> list() {
         log.info("Listing all products");
@@ -32,7 +29,7 @@ public class ProductController {
     }
 
     @Get("/{id}")
-    public Mono<Product> getById(@NotNull @NotEmpty String id) {
+    public Mono<Product> getById(String id) {
         log.info("Request for product id: {}", id);
         return productService.getById(id);
     }
@@ -46,7 +43,7 @@ public class ProductController {
 
 
     @Put("/{id}")
-    public Mono<Product> update(String id, Product product){
+    public Mono<Product> update(String id, @Body @Valid Product product){
         log.info("Updating product {} with values {}", id, product);
         product.setId(id);
         return productService.update(product);
