@@ -1,16 +1,14 @@
 package products.controller;
 
-import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Get;
-import io.micronaut.http.annotation.Post;
-import io.micronaut.http.annotation.Put;
+import io.micronaut.http.HttpStatus;
+import io.micronaut.http.annotation.*;
 import io.micronaut.validation.Validated;
 import lombok.extern.slf4j.Slf4j;
 import products.model.Product;
 import products.service.ProductService;
 import reactor.core.publisher.Mono;
 
-import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -20,7 +18,11 @@ import java.util.List;
 @Controller("/products")
 public class ProductController {
 
-    @Inject private ProductService productService;
+    private ProductService productService;
+
+    public ProductController(ProductService productService){
+        this.productService = productService;
+    }
 
 
     @Get()
@@ -35,11 +37,13 @@ public class ProductController {
         return productService.getById(id);
     }
 
-    @Post()
-    public Mono<Product> create(Product product){
+    @Post
+    @Status(HttpStatus.CREATED)
+    public Mono<Product> create(@Body @Valid Product product){
         log.info("Creating product {}", product);
         return productService.create(product);
     }
+
 
     @Put("/{id}")
     public Mono<Product> update(String id, Product product){
