@@ -3,16 +3,13 @@ package products.repository;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.api.reactive.RedisReactiveCommands;
-import io.reactivex.Flowable;
 import lombok.extern.slf4j.Slf4j;
 import products.model.Product;
 import products.redis.SerializedObjectCodec;
 import reactor.core.publisher.Mono;
 
 import javax.inject.Singleton;
-import javax.swing.text.html.Option;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j

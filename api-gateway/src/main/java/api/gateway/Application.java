@@ -1,4 +1,4 @@
-package products;
+package api.gateway;
 
 import io.micronaut.runtime.Micronaut;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
@@ -8,9 +8,9 @@ import io.swagger.v3.oas.annotations.info.License;
 
 @OpenAPIDefinition(
         info = @Info(
-                title = "Products Api",
+                title = "Api Gateway Orko",
                 version = "0.0",
-                description = "Products api of the orko company",
+                description = "Api gateway of the orko company",
                 license = @License(name = "Apache 2.0", url = "http://foo.bar"),
                 contact = @Contact(name = "Orko", email = "orquito@gmail.com")
         )
