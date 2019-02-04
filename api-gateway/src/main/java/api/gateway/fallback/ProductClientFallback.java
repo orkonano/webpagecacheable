@@ -23,7 +23,7 @@ public class ProductClientFallback implements ProductClient {
 
     @Override
     public Single<List<Product>> listAll() {
-        log.info("Devolviendo la lista default");
+        log.info("Default product list");
         return Single.just(Arrays.asList(defaultProduct));
     }
 
